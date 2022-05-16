@@ -8,6 +8,7 @@ import { Response, Request } from "express";
 import { SignupFields, signupValidate } from "@forms/signup";
 import { createSession } from "@helpers/createSession";
 import { User } from "@models/User";
+import { deleteSession } from "@helpers/deleteSession";
 
 export class UserController {
   async login(request: Request, res: Response) {
@@ -36,6 +37,16 @@ export class UserController {
     });
   }
 
+  async logout(request: Request, res: Response) {
+    const req = request as TypedRequest<AuthRequest & DbRequest>;
+
+    await tryCatchCRUD(res, async () => {
+      if (!req.user) throw new Error("No user");
+      await deleteSession(req.sessionsCollection, req.sessionId);
+      res.clearCookie("sessionId").redirect("/");
+    });
+  }
+
   async signup(request: Request, res: Response) {
     const req = request as TypedRequest<AuthRequest & DbRequest>;
 
@@ -58,6 +69,17 @@ export class UserController {
       } as User);
 
       return res.json(userId);
+    });
+  }
+
+  async getUserList(request: Request, res: Response) {
+    const req = request as TypedRequest<AuthRequest & DbRequest>;
+
+    await tryCatchCRUD(res, async () => {
+      console.log(req.query);
+      const users = await req.usersCollection.find(req.query).toArray();
+
+      res.json(users);
     });
   }
 }
