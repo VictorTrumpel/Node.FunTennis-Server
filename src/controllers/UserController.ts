@@ -76,10 +76,16 @@ export class UserController {
     const req = request as TypedRequest<AuthRequest & DbRequest>;
 
     await tryCatchCRUD(res, async () => {
-      console.log(req.query);
       const users = await req.usersCollection.find(req.query).toArray();
+      const usersSecurity = users.map((user) => {
+        const securityUser: Partial<User> = {
+          ...user,
+        };
+        delete securityUser["password"];
+        return securityUser;
+      });
 
-      res.json(users);
+      res.json(usersSecurity);
     });
   }
 }
