@@ -43,7 +43,7 @@ export class UserController {
     await tryCatchCRUD(res, async () => {
       if (!req.user) throw new Error("No user");
       await deleteSession(req.sessionsCollection, req.sessionId);
-      res.clearCookie("sessionId").redirect("/");
+      res.clearCookie("sessionId").json({ message: "success" });
     });
   }
 
