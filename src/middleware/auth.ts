@@ -11,11 +11,16 @@ export type AuthRequest = {
 };
 
 export const auth = withMiddleware<AuthRequest>()(async (req, res, next) => {
-  const sessionId = `${req.cookies["sessionId"]}`;
+  const sessionId = req.cookies["sessionId"];
+
+  if (req.url === "/login") {
+    req.user = null;
+    return next();
+  }
 
   if (!sessionId) {
     req.user = null;
-    return next();
+    return res.status(401).json({ message: "Not authorized!" });
   }
 
   const session = await req.sessionsCollection.findOne({ sessionId });

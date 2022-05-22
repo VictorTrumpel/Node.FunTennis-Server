@@ -72,6 +72,13 @@ export class UserController {
     });
   }
 
+  async auth(request: Request, res: Response) {
+    const req = request as TypedRequest<AuthRequest & DbRequest>;
+    await tryCatchCRUD(res, async () => {
+      res.json(req.user);
+    });
+  }
+
   async getUserList(request: Request, res: Response) {
     const req = request as TypedRequest<AuthRequest & DbRequest>;
 

@@ -20,6 +20,8 @@ userRouter.post(
   userController.login.bind(userController)
 );
 
+userRouter.get("/auth", userController.auth.bind(userController));
+
 userRouter.get("/logout", userController.logout.bind(userController));
 
 userRouter.get("/users", userController.getUserList.bind(userController));
