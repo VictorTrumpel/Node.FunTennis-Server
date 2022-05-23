@@ -9,6 +9,7 @@ import { SignupFields, signupValidate } from "@forms/signup";
 import { createSession } from "@helpers/createSession";
 import { User } from "@models/User";
 import { deleteSession } from "@helpers/deleteSession";
+import { loginValidate } from "@forms/login";
 
 export class UserController {
   async login(request: Request, res: Response) {
@@ -18,7 +19,7 @@ export class UserController {
       const fields: (keyof SignupFields)[] = ["username", "password"];
       const { username, password } = pick(req.body, ...fields) as SignupFields;
 
-      await signupValidate({ username, password });
+      await loginValidate({ username, password });
 
       const user = await req.usersCollection.findOne({ username });
 
