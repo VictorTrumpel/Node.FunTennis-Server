@@ -6,14 +6,19 @@ export type SignupFields = {
 };
 
 const signupSchema = yup.object().shape({
-  username: yup.string().required(),
-  password: yup.string().required(),
-  fullName: yup.string().nullable(),
-  balance: yup.number().required(),
+  username: yup.string().required().max(20),
+  password: yup.string().required().max(100),
+  fullName: yup.string().required().max(100),
+  email: yup.string().nullable().max(100),
+  phone: yup.string().required().max(20),
+  description: yup.string().nullable().max(250),
   level: yup.number().required(),
+  balance: yup.number().nullable(),
+  gender: yup
+    .string()
+    .required()
+    .test((value) => ["М", "Ж"].includes(value as string)),
   role: yup.string().required(),
-  description: yup.string().nullable(),
-  email: yup.string().nullable(),
 });
 
 export const signupValidate = async (userData: SignupFields) => {

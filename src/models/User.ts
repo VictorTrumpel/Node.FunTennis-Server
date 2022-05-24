@@ -5,7 +5,7 @@ export type User = {
   username: string;
   fullName?: string;
   balance: number;
-  level: number;
+  level: 1 | 2 | 3 | 4;
   email?: string;
   role: "student" | "coach";
   description?: string;

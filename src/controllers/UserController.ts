@@ -55,7 +55,7 @@ export class UserController {
       const fields: (keyof SignupFields)[] = ["username", "password"];
       const { username, password } = pick(req.body, ...fields) as SignupFields;
 
-      await signupValidate({ username, password });
+      await signupValidate(req.body);
 
       const isUserExists = !!(await req.usersCollection.findOne({
         username: username,
@@ -65,7 +65,7 @@ export class UserController {
 
       const hashPassword = await bcrypt.hash(password as string, 5);
       const userId = await req.usersCollection.insertOne({
-        username,
+        ...req.body,
         password: hashPassword,
       } as User);
 
