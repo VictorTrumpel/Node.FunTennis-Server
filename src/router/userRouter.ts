@@ -24,4 +24,6 @@ userRouter.get("/logout", userController.logout.bind(userController));
 
 userRouter.get("/users", userController.getUserList.bind(userController));
 
+userRouter.get("/users/:id", userController.getUser.bind(userController));
+
 export default userRouter;

@@ -10,6 +10,7 @@ import { createSession } from "@helpers/createSession";
 import { User } from "@models/User";
 import { deleteSession } from "@helpers/deleteSession";
 import { loginValidate } from "@forms/login";
+import { ObjectId } from "mongodb";
 
 export class UserController {
   async login(request: Request, res: Response) {
@@ -94,6 +95,24 @@ export class UserController {
       });
 
       res.json(usersSecurity);
+    });
+  }
+
+  async getUser(request: Request, res: Response) {
+    const req = request as TypedRequest<AuthRequest & DbRequest>;
+
+    await tryCatchCRUD(res, async () => {
+      const pathParts = req.path.split("/");
+      const id = pathParts[pathParts.length - 1];
+
+      const user = await req.usersCollection.findOne({
+        _id: new ObjectId(id),
+      });
+
+      const protectedUser: Partial<User> = { ...user };
+      delete protectedUser["password"];
+
+      res.json(protectedUser);
     });
   }
 }

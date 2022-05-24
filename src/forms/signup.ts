@@ -14,10 +14,7 @@ const signupSchema = yup.object().shape({
   description: yup.string().nullable().max(250),
   level: yup.number().required(),
   balance: yup.number().nullable(),
-  gender: yup
-    .string()
-    .required()
-    .test((value) => ["М", "Ж"].includes(value as string)),
+  gender: yup.string().required(),
   role: yup.string().required(),
 });
 
