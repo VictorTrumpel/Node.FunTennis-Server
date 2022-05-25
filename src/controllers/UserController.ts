@@ -11,6 +11,7 @@ import { User } from "@models/User";
 import { deleteSession } from "@helpers/deleteSession";
 import { loginValidate } from "@forms/login";
 import { ObjectId } from "mongodb";
+import cloneDeep from "lodash.clonedeep";
 
 export class UserController {
   async login(request: Request, res: Response) {
@@ -113,6 +114,28 @@ export class UserController {
       delete protectedUser["password"];
 
       res.json(protectedUser);
+    });
+  }
+
+  async updateUser(request: Request, res: Response) {
+    const req = request as TypedRequest<AuthRequest & DbRequest>;
+
+    await tryCatchCRUD(res, async () => {
+      const fields: (keyof SignupFields)[] = ["username", "password"];
+      const { username } = pick(req.body, ...fields) as SignupFields;
+
+      await signupValidate(req.body);
+
+      const dispatchInf = cloneDeep(req.body);
+      delete dispatchInf["password"];
+      delete dispatchInf["_id"];
+
+      await req.usersCollection.updateOne(
+        { username: { $eq: username } },
+        { $set: { ...dispatchInf } }
+      );
+
+      res.json({ message: "success" });
     });
   }
 }

@@ -26,4 +26,6 @@ userRouter.get("/users", userController.getUserList.bind(userController));
 
 userRouter.get("/users/:id", userController.getUser.bind(userController));
 
+userRouter.post("/users/:id", userController.updateUser.bind(userController));
+
 export default userRouter;
