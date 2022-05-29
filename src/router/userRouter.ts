@@ -26,4 +26,6 @@ userRouter.get("/users/searchByName", userController.searchByName);
 
 userRouter.get("/users/:id", userController.getUser);
 
+userRouter.post("/users/:id", userController.updateUser.bind(userController));
+
 export default userRouter;

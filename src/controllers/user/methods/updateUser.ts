@@ -22,6 +22,6 @@ export const updateUser = withMethod<TypedRequest<AuthRequest & DbRequest>>(
       { $set: { ...dispatchInf } }
     );
 
-    res.json({ message: "success" });
+    return res.json({ message: "success" });
   }
 );
