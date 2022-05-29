@@ -1,9 +1,9 @@
-import { withMiddleware } from "@middleware/withMiddleware";
+import { withMiddleware } from "@helpers/withMiddleware";
 import { WithId } from "mongodb";
-import { User } from "@models/User";
+import { UserModel } from "@controllers/user/UserModel";
 
 export type AuthRequest = {
-  user?: WithId<User> | null;
+  user?: WithId<UserModel> | null;
   sessionId: string;
 };
 

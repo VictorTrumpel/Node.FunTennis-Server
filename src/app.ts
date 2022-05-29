@@ -1,3 +1,5 @@
+import { corsOptions } from "../corsOptions";
+
 require("dotenv").config();
 import cookieParser from "cookie-parser";
 import express from "express";
@@ -10,11 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(connectToDb);
-app.use(
-  cors({
-    origin: process.env["CLIENT_URL"],
-  })
-);
+app.use(cors(corsOptions));
 app.use(router);
 
 app.listen(process.env["PORT"], () => {

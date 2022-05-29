@@ -1,12 +1,12 @@
 import { Collection, WithId } from "mongodb";
-import { Session } from "@models/Session";
-import { User } from "@models/User";
-import { withMiddleware } from "./withMiddleware";
+import { SessionModel } from "@models/SessionModel";
+import { UserModel } from "@controllers/user/UserModel";
+import { withMiddleware } from "@helpers/withMiddleware";
 
 export type AuthRequest = {
-  usersCollection: Collection<User>;
-  sessionsCollection: Collection<Session>;
-  user: WithId<User> | null;
+  usersCollection: Collection<UserModel>;
+  sessionsCollection: Collection<SessionModel>;
+  user: WithId<UserModel> | null;
   sessionId: string;
 };
 

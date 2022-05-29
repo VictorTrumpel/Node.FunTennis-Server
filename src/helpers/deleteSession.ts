@@ -1,8 +1,8 @@
 import { Collection } from "mongodb";
-import { Session } from "@models/Session";
+import { SessionModel } from "@models/SessionModel";
 
 export const deleteSession = async (
-  sessionsCollection: Collection<Session>,
+  sessionsCollection: Collection<SessionModel>,
   sessionId: string
 ) => {
   await sessionsCollection.deleteOne({ sessionId });

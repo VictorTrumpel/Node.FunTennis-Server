@@ -1,31 +1,29 @@
 import { Router } from "express";
 import bodyParser from "body-parser";
-import { UserController } from "@controllers/UserController";
-
-const userController = new UserController();
+import userController from "@controllers/user/UserController";
 
 const userRouter = Router();
 
 userRouter.post(
   "/signup",
   bodyParser.urlencoded({ extended: true }),
-  userController.signup.bind(userController)
+  userController.signup
 );
 
 userRouter.post(
   "/login",
   bodyParser.urlencoded({ extended: true }),
-  userController.login.bind(userController)
+  userController.login
 );
 
-userRouter.get("/auth", userController.auth.bind(userController));
+userRouter.get("/auth", userController.auth);
 
-userRouter.get("/logout", userController.logout.bind(userController));
+userRouter.get("/logout", userController.logout);
 
-userRouter.get("/users", userController.getUserList.bind(userController));
+userRouter.get("/users", userController.getUserList);
 
-userRouter.get("/users/:id", userController.getUser.bind(userController));
+userRouter.get("/users/searchByName", userController.searchByName);
 
-userRouter.post("/users/:id", userController.updateUser.bind(userController));
+userRouter.get("/users/:id", userController.getUser);
 
 export default userRouter;

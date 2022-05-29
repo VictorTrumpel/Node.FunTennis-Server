@@ -1,6 +1,6 @@
 import { Response } from "express";
 
-export const tryCatchCRUD = async (
+export const withTryCatchCRUD = async (
   res: Response,
   tryCallback?: () => Promise<any>,
   catchCallBack?: () => Promise<any>,
