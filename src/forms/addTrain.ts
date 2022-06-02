@@ -3,7 +3,7 @@ import { UserModel } from "@controllers/user/UserModel";
 
 export type AddTrainFields = Partial<{
   participants: UserModel[];
-  trainer: UserModel;
+  trainer: UserModel[];
   date: Date;
   info: string;
   password?: string;

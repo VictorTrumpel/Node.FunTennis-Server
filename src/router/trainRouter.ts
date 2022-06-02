@@ -3,6 +3,6 @@ import trainController from "@controllers/train/TrainController";
 
 const trainRouter = Router();
 
-trainRouter.get("/train", trainController.addTrain);
+trainRouter.post("/train", trainController.addTrain);
 
 export default trainRouter;
