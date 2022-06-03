@@ -6,11 +6,13 @@ export type AddTrainFields = Partial<{
   trainer: UserModel[];
   date: Date;
   info: string;
-  password?: string;
 }>;
 
 const addTrainSchema = yup.object().shape({
-  info: yup.string().required(),
+  participants: yup.array().required().min(1),
+  trainer: yup.array().required().min(1),
+  date: yup.date().required(),
+  info: yup.string().nullable(),
 });
 
 export const addTrainValidate = async (trainData: AddTrainFields) => {
